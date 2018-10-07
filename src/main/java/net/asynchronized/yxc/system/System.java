@@ -5,13 +5,22 @@
  */
 package net.asynchronized.yxc.system;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class System {
     @JsonProperty("func_list")
     private List<String> functions;
@@ -27,6 +36,8 @@ public class System {
     private List<String> ymapList;
     @JsonProperty("web_control_url")
     private String webControlUrl;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public List<String> getFunctions() {
         return functions;
@@ -84,9 +95,18 @@ public class System {
         this.webControlUrl = webControlUrl;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "System{" + "functions=" + functions + ", numberOfZones=" + numberOfZones + ", inputList=" + inputList + ", rangeSteps=" + rangeSteps + ", speakerSettings=" + speakerSettings + ", ymapList=" + ymapList + ", webControlUrl=" + webControlUrl + '}';
+        return "System{" + "functions=" + functions + ", numberOfZones=" + numberOfZones + ", inputList=" + inputList + ", rangeSteps=" + rangeSteps + ", speakerSettings=" + speakerSettings + ", ymapList=" + ymapList + ", webControlUrl=" + webControlUrl + ", additionalProperties=" + additionalProperties + '}';
     }
-    
 }

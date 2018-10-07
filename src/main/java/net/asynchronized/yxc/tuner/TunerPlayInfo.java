@@ -5,13 +5,22 @@
  */
 package net.asynchronized.yxc.tuner;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 import net.asynchronized.yxc.Response;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TunerPlayInfo extends Response {
     public static final String PATH = ROOT_PATH + "/tuner/getPlayInfo";
     
@@ -26,6 +35,8 @@ public class TunerPlayInfo extends Response {
     private DAB dab;
     @JsonProperty("hd_radio")
     private Object hdRadio;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getBand() {
         return band;
@@ -91,9 +102,19 @@ public class TunerPlayInfo extends Response {
         this.hdRadio = hdRadio;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "PlayInfo{" + "responseCode=" + getResponseCode() + ", band=" + band + ", autoScan=" + autoScan + ", autoPreset=" + autoPreset + ", am=" + am + ", fm=" + fm + ", rds=" + rds + ", dab=" + dab + ", hdRadio=" + hdRadio + '}';
+        return "TunerPlayInfo{" + "band=" + band + ", autoScan=" + autoScan + ", autoPreset=" + autoPreset + ", am=" + am + ", fm=" + fm + ", rds=" + rds + ", dab=" + dab + ", hdRadio=" + hdRadio + ", additionalProperties=" + additionalProperties + '}';
     }
     
 }

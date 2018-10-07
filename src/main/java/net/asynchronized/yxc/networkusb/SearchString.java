@@ -5,15 +5,21 @@
  */
 package net.asynchronized.yxc.networkusb;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author enrico
  */
-@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchString {
     public static final String PATH = "/YamahaExtendedControl/v1/netusb/setSearchString";
     
@@ -21,6 +27,8 @@ public class SearchString {
     private String listId;
     private String string;
     private Integer index;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getListId() {
         return listId;
@@ -46,9 +54,19 @@ public class SearchString {
         this.index = index;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "SearchString{" + "listId=" + listId + ", string=" + string + ", index=" + index + '}';
+        return "SearchString{" + "listId=" + listId + ", string=" + string + ", index=" + index + ", additionalProperties=" + additionalProperties + '}';
     }
     
 }

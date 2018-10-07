@@ -5,14 +5,26 @@
  */
 package net.asynchronized.yxc.tuner;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AM {
     private Integer preset;
     private Integer freq;
     private Boolean tuned;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getPreset() {
         return preset;
@@ -37,10 +49,19 @@ public class AM {
     public void setTuned(Boolean tuned) {
         this.tuned = tuned;
     }
+    
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
 
     @Override
     public String toString() {
-        return "AM{" + "preset=" + preset + ", freq=" + freq + ", tuned=" + tuned + '}';
+        return "AM{" + "preset=" + preset + ", freq=" + freq + ", tuned=" + tuned + ", additionalProperties=" + additionalProperties + '}';
     }
-    
 }

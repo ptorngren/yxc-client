@@ -5,13 +5,22 @@
  */
 package net.asynchronized.yxc.cd;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 import net.asynchronized.yxc.Response;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CdPlayInfo extends Response {
     public static final String PATH = ROOT_PATH + "/cd/getPlayInfo";
     
@@ -33,6 +42,8 @@ public class CdPlayInfo extends Response {
     private String artist;
     private String album;
     private String track;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getDeviceStatus() {
         return deviceStatus;
@@ -130,6 +141,16 @@ public class CdPlayInfo extends Response {
         this.track = track;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+    
     @Override
     public String toString() {
         return "CdPlayInfo{" + "responseCode=" + getResponseCode() + ", deviceStatus=" + deviceStatus + ", playback=" + playback + ", repeat=" + repeat + ", shuffle=" + shuffle + ", playTime=" + playTime + ", totalTime=" + totalTime + ", discTime=" + discTime + ", trackNumber=" + trackNumber + ", totalTracks=" + totalTracks + ", artist=" + artist + ", album=" + album + ", track=" + track + '}';

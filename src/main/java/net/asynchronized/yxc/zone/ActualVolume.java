@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.asynchronized.yxc.system;
+package net.asynchronized.yxc.zone;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,18 +19,35 @@ import java.util.Map;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Distribution {
-    @JsonProperty("server_zone_list")
-    private List<String> serverZoneList;
+public class ActualVolume {
+    private String mode;
+    private Integer value;
+    private String unit;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public List<String> getServerZoneList() {
-        return serverZoneList;
+    public String getMode() {
+        return mode;
     }
 
-    public void setServerZoneList(List<String> serverZoneList) {
-        this.serverZoneList = serverZoneList;
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     @JsonAnyGetter
@@ -47,6 +62,6 @@ public class Distribution {
 
     @Override
     public String toString() {
-        return "Distribution{" + "serverZoneList=" + serverZoneList + ", additionalProperties=" + additionalProperties + '}';
+        return "ActualVolume{" + "mode=" + mode + ", value=" + value + ", unit=" + unit + ", additionalProperties=" + additionalProperties + '}';
     }
 }

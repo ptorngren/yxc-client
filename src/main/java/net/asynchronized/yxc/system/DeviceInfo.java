@@ -5,13 +5,22 @@
  */
 package net.asynchronized.yxc.system;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 import net.asynchronized.yxc.Response;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DeviceInfo extends Response {
     public static final String PATH = ROOT_PATH + "/system/getDeviceInfo";
     
@@ -36,6 +45,8 @@ public class DeviceInfo extends Response {
     private String updateErrorCode;
     @JsonProperty("update_progress")
     private Object updateProgress;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getModelName() {
         return modelName;
@@ -125,9 +136,19 @@ public class DeviceInfo extends Response {
         this.updateProgress = updateProgress;
     }
 
-    @Override
-    public String toString() {
-        return "DeviceInfo{" + "responseCode=" + getResponseCode() + ", modelName=" + modelName + ", destination=" + destination + ", deviceId=" + deviceId + ", systemId=" + systemId + ", systemVersion=" + systemVersion + ", apiVersion=" + apiVersion + ", netModuleVersion=" + netModuleVersion + ", netModuleChecksum=" + netModuleChecksum + ", operationMode=" + operationMode + ", updateErrorCode=" + updateErrorCode + ", updateProgress=" + updateProgress + '}';
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
     }
 
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceInfo{" + "modelName=" + modelName + ", destination=" + destination + ", deviceId=" + deviceId + ", systemId=" + systemId + ", systemVersion=" + systemVersion + ", apiVersion=" + apiVersion + ", netModuleVersion=" + netModuleVersion + ", netModuleChecksum=" + netModuleChecksum + ", operationMode=" + operationMode + ", updateErrorCode=" + updateErrorCode + ", updateProgress=" + updateProgress + ", additionalProperties=" + additionalProperties + '}';
+    }
+    
 }

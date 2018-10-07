@@ -5,14 +5,23 @@
  */
 package net.asynchronized.yxc.networkusb;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.asynchronized.yxc.Response;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ListInfo extends Response {
     public static final String PATH = ROOT_PATH + "/netusb/getListInfo?input=";
     
@@ -28,6 +37,8 @@ public class ListInfo extends Response {
     private String menuName;
     @JsonProperty("list_info")
     private List<ListInfoEntry> listInfoEntries;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getInput() {
         return input;
@@ -84,10 +95,20 @@ public class ListInfo extends Response {
     public void setListInfoEntries(List<ListInfoEntry> listInfoEntries) {
         this.listInfoEntries = listInfoEntries;
     }
+    
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
 
     @Override
     public String toString() {
-        return "ListInfo{" + "responseCode=" + getResponseCode() + ", input=" + input + ", menuLayer=" + menuLayer + ", maxLine=" + maxLine + ", index=" + index + ", playingIndex=" + playingIndex + ", menuName=" + menuName + ", listInfoEntries=" + listInfoEntries + '}';
+        return "ListInfo{" + "input=" + input + ", menuLayer=" + menuLayer + ", maxLine=" + maxLine + ", index=" + index + ", playingIndex=" + playingIndex + ", menuName=" + menuName + ", listInfoEntries=" + listInfoEntries + ", additionalProperties=" + additionalProperties + '}';
     }
-    
+
 }

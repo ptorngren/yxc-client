@@ -5,13 +5,22 @@
  */
 package net.asynchronized.yxc.networkusb;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 import net.asynchronized.yxc.Response;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NetworkUsbPlayInfo extends Response {
     public static final String PATH = ROOT_PATH + "/netusb/getPlayInfo";
     
@@ -37,6 +46,8 @@ public class NetworkUsbPlayInfo extends Response {
     @JsonProperty("auto_stopped")
     private Boolean autoStopped;
     private Integer attribute;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getInput() {
         return input;
@@ -158,9 +169,19 @@ public class NetworkUsbPlayInfo extends Response {
         this.attribute = attribute;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "NetworkUsbPlayInfo{" + "responseCode=" + getResponseCode() + ", input=" + input + ", playQueueType=" + playQueueType + ", playback=" + playback + ", repeat=" + repeat + ", shuffle=" + shuffle + ", playTime=" + playTime + ", totalTime=" + totalTime + ", artist=" + artist + ", album=" + album + ", track=" + track + ", albumArtUrl=" + albumArtUrl + ", albumArtId=" + albumArtId + ", usbDeviceType=" + usbDeviceType + ", autoStopped=" + autoStopped + ", attribute=" + attribute + '}';
+        return "NetworkUsbPlayInfo{" + "input=" + input + ", playQueueType=" + playQueueType + ", playback=" + playback + ", repeat=" + repeat + ", shuffle=" + shuffle + ", playTime=" + playTime + ", totalTime=" + totalTime + ", artist=" + artist + ", album=" + album + ", track=" + track + ", albumArtUrl=" + albumArtUrl + ", albumArtId=" + albumArtId + ", usbDeviceType=" + usbDeviceType + ", autoStopped=" + autoStopped + ", attribute=" + attribute + ", additionalProperties=" + additionalProperties + '}';
     }
     
 }

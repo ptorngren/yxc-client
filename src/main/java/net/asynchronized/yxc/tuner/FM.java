@@ -5,18 +5,29 @@
  */
 package net.asynchronized.yxc.tuner;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FM {
     private Integer preset;
     private Integer freq;
     private Boolean tuned;
     @JsonProperty("audio_mode")
     private String audioMode;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getPreset() {
         return preset;
@@ -49,10 +60,19 @@ public class FM {
     public void setAudioMode(String audioMode) {
         this.audioMode = audioMode;
     }
+    
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
 
     @Override
     public String toString() {
-        return "FM{" + "preset=" + preset + ", freq=" + freq + ", tuned=" + tuned + ", audioMode=" + audioMode + '}';
+        return "FM{" + "preset=" + preset + ", freq=" + freq + ", tuned=" + tuned + ", audioMode=" + audioMode + ", additionalProperties=" + additionalProperties + '}';
     }
-    
 }

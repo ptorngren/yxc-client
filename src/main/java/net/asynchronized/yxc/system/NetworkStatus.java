@@ -5,13 +5,22 @@
  */
 package net.asynchronized.yxc.system;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 import net.asynchronized.yxc.Response;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NetworkStatus extends Response {
     public static final String PATH = ROOT_PATH + "/system/getNetworkStatus";
     
@@ -41,6 +50,8 @@ public class NetworkStatus extends Response {
     private String vtunerId;
     @JsonProperty("airplay_pin")
     private String airplayPin;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getNetworkName() {
         return networkName;
@@ -154,9 +165,18 @@ public class NetworkStatus extends Response {
         this.airplayPin = airplayPin;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "NetworkStatus{" + "responseCode=" + getResponseCode() + ", networkName=" + networkName + ", connection=" + connection + ", dhcp=" + dhcp + ", ip=" + ip + ", subnetMask=" + subnetMask + ", defaultGateway=" + defaultGateway + ", dnsServer1=" + dnsServer1 + ", dnsServer2=" + dnsServer2 + ", wirelessLan=" + wirelessLan + ", wirelessDirect=" + wirelessDirect + ", musiccastNetwork=" + musiccastNetwork + ", macAddress=" + macAddress + ", vtunerId=" + vtunerId + ", airplayPin=" + airplayPin + '}';
+        return "NetworkStatus{" + "networkName=" + networkName + ", connection=" + connection + ", dhcp=" + dhcp + ", ip=" + ip + ", subnetMask=" + subnetMask + ", defaultGateway=" + defaultGateway + ", dnsServer1=" + dnsServer1 + ", dnsServer2=" + dnsServer2 + ", wirelessLan=" + wirelessLan + ", wirelessDirect=" + wirelessDirect + ", musiccastNetwork=" + musiccastNetwork + ", macAddress=" + macAddress + ", vtunerId=" + vtunerId + ", airplayPin=" + airplayPin + ", additionalProperties=" + additionalProperties + '}';
     }
-    
 }

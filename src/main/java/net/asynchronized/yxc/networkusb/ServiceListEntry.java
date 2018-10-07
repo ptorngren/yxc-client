@@ -5,12 +5,21 @@
  */
 package net.asynchronized.yxc.networkusb;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceListEntry {
     private String id;
     private Boolean registered;
@@ -20,6 +29,8 @@ public class ServiceListEntry {
     private String type;
     @JsonProperty("trial_time_left")
     private Integer trialTimeLeft;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getId() {
         return id;
@@ -69,9 +80,19 @@ public class ServiceListEntry {
         this.trialTimeLeft = trialTimeLeft;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "ServiceListEntry{" + "id=" + id + ", registered=" + registered + ", loginStatus=" + loginStatus + ", username=" + username + ", type=" + type + ", trialTimeLeft=" + trialTimeLeft + '}';
+        return "ServiceListEntry{" + "id=" + id + ", registered=" + registered + ", loginStatus=" + loginStatus + ", username=" + username + ", type=" + type + ", trialTimeLeft=" + trialTimeLeft + ", additionalProperties=" + additionalProperties + '}';
     }
     
 }

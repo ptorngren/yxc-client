@@ -5,12 +5,21 @@
  */
 package net.asynchronized.yxc.system;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Input {
     private String id;
     @JsonProperty("distribution_enable")
@@ -21,6 +30,8 @@ public class Input {
     private Boolean accountEnable;
     @JsonProperty("play_info_type")
     private String playInfoType;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getId() {
         return id;
@@ -62,9 +73,18 @@ public class Input {
         this.playInfoType = playInfoType;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "Input{" + "id=" + id + ", distributionEnable=" + distributionEnable + ", renameEnable=" + renameEnable + ", accountEnable=" + accountEnable + ", playInfoType=" + playInfoType + '}';
+        return "Input{" + "id=" + id + ", distributionEnable=" + distributionEnable + ", renameEnable=" + renameEnable + ", accountEnable=" + accountEnable + ", playInfoType=" + playInfoType + ", additionalProperties=" + additionalProperties + '}';
     }
-    
 }

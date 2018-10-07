@@ -5,16 +5,27 @@
  */
 package net.asynchronized.yxc.system;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.asynchronized.yxc.Response;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FeatureInfo extends Response {
     public static final String PATH = ROOT_PATH + "/system/getFeatures";
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
     
     private System system;
     @JsonProperty("zone")
@@ -73,9 +84,19 @@ public class FeatureInfo extends Response {
         this.clock = clock;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "FeatureInfo{" + "responseCode=" + getResponseCode() + ", system=" + system + ", zones=" + zones + ", tuner=" + tuner + ", netUsb=" + netUsb + ", distribution=" + distribution + ", clock=" + clock + '}';
+        return "FeatureInfo{" + "additionalProperties=" + additionalProperties + ", system=" + system + ", zones=" + zones + ", tuner=" + tuner + ", netUsb=" + netUsb + ", distribution=" + distribution + ", clock=" + clock + '}';
     }
     
 }

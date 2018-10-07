@@ -5,15 +5,27 @@
  */
 package net.asynchronized.yxc.system;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ZoneList {
     private Boolean main;
     private Boolean zone2;
     private Boolean zone3;
     private Boolean zone4;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Boolean getMain() {
         return main;
@@ -47,9 +59,19 @@ public class ZoneList {
         this.zone4 = zone4;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "LocationInfoZone{" + "main=" + main + ", zone2=" + zone2 + ", zone3=" + zone3 + ", zone4=" + zone4 + '}';
+        return "ZoneList{" + "main=" + main + ", zone2=" + zone2 + ", zone3=" + zone3 + ", zone4=" + zone4 + ", additionalProperties=" + additionalProperties + '}';
     }
     
 }

@@ -5,13 +5,22 @@
  */
 package net.asynchronized.yxc.system;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 import net.asynchronized.yxc.Response;
 
 /**
  *
  * @author enrico
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FuncStatus extends Response {
     public static final String PATH = ROOT_PATH + "/system/getFuncStatus";
     
@@ -29,6 +38,8 @@ public class FuncStatus extends Response {
     private Boolean zoneBVolumeSync;
     @JsonProperty("hdmi_out_1")     // hdmi_out_1 not content in API doc, all other parameters not returned
     private Boolean hdmiOut1;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Boolean getAutoPowerStandby() {
         return autoPowerStandby;
@@ -94,9 +105,18 @@ public class FuncStatus extends Response {
         this.hdmiOut1 = hdmiOut1;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
     @Override
     public String toString() {
-        return "FuncStatus{" + "responseCode=" + getResponseCode() + ", autoPowerStandby=" + autoPowerStandby + ", irSensor=" + irSensor + ", speakerA=" + speakerA + ", speakerB=" + speakerB + ", headphone=" + headphone + ", dimmer=" + dimmer + ", zoneBVolumeSync=" + zoneBVolumeSync + ", hdmiOut1=" + hdmiOut1 + '}';
+        return "FuncStatus{" + "autoPowerStandby=" + autoPowerStandby + ", irSensor=" + irSensor + ", speakerA=" + speakerA + ", speakerB=" + speakerB + ", headphone=" + headphone + ", dimmer=" + dimmer + ", zoneBVolumeSync=" + zoneBVolumeSync + ", hdmiOut1=" + hdmiOut1 + ", additionalProperties=" + additionalProperties + '}';
     }
-    
 }
