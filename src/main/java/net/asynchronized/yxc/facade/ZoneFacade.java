@@ -50,7 +50,7 @@ public class ZoneFacade extends AbstractFacade {
      * @throws IOException
      */
     public SoundProgramList getSoundProgramList() throws IOException {
-        SoundProgramList list = call(path + zone + SoundProgramList.METHOD, SoundProgramList.class);
+        SoundProgramList list = call(path + SoundProgramList.METHOD, SoundProgramList.class);
         return list;
     }
 
@@ -144,6 +144,31 @@ public class ZoneFacade extends AbstractFacade {
      */
     public Response prepareInputChange(String input) throws IOException {
         Response response = call(path + Response.ZONE_PREPARE_INPUT_CHANGE_METHOD + input, Response.class);
+        return response;
+    }
+    
+    /**
+     * For setting Link Control in each Zone.
+     * 
+     * @param control Specifies Link Control setting (Values: Values gotten via /system/getFeatures)
+     * @return Response code
+     * @throws IOException 
+     */
+    public Response setLinkControl(String control) throws IOException {
+        Response response = call(path + Response.ZONE_SET_LINK_CONTROL_PATH + control, Response.class);
+        return response;
+    }
+    
+    /**
+     * For setting Link Audio Delay in each Zone. This setting is invalid when Link Control setting is
+     * "Stability Boost ".
+     * 
+     * @param delay Specifies Link Audio Delay setting (Values: Values gotten via /system/getFeatures)
+     * @return Response code
+     * @throws IOException 
+     */
+    public Response setLinkAudioDelay(String delay) throws IOException {
+        Response response = call(path + Response.ZONE_SET_LINK_AUDIO_DELAY_PATH + delay, Response.class);
         return response;
     }
 }

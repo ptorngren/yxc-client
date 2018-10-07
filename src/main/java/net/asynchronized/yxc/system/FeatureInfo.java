@@ -24,8 +24,6 @@ import net.asynchronized.yxc.Response;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FeatureInfo extends Response {
     public static final String PATH = ROOT_PATH + "/system/getFeatures";
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
     
     private System system;
     @JsonProperty("zone")
@@ -35,6 +33,8 @@ public class FeatureInfo extends Response {
     private NetUsb netUsb;
     private Distribution distribution;
     private Object clock;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public System getSystem() {
         return system;

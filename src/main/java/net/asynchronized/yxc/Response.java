@@ -64,6 +64,9 @@ public class Response {
     public static final String ZONE_SET_SOUND_PROGRAM_METHOD = "/setSoundProgram?program=";
     public static final String ZONE_PREPARE_INPUT_CHANGE_METHOD = "/prepareInputChange?input=";
     
+    public static final String ZONE_SET_LINK_CONTROL_PATH = "/system/setLinkControl?control=";
+    public static final String ZONE_SET_LINK_AUDIO_DELAY_PATH = "setLinkAudioDelay?delay=";
+    
     public static final String TUNER_SET_FREQ_PATH = ROOT_PATH + "/tuner/setFreq?band=";
     public static final String TUNER_FREQ_BAND_AM = "am";
     public static final String TUNER_FREQ_BAND_FM = "fm";
@@ -113,6 +116,9 @@ public class Response {
     public static final String CD_TOGGLE_TRAY_PATH = ROOT_PATH + "/cd/toggleTray";
     public static final String CD_TOGGLE_REPEAT_PATH = ROOT_PATH + "/cd/toggleRepeat";
     public static final String CD_TOGGLE_SHUFFLE_PATH = ROOT_PATH + "/cd/toggleShuffle";
+    
+    public static final String DIST_START_DISTRIBUTION_PATH = ROOT_PATH + "/dist/startDistribution?num=";
+    public static final String DIST_STOP_DISTRIBUTION_PATH = ROOT_PATH + "/dist/stopDistribution";
     
     @JsonProperty("response_code")
     private Integer responseCode;
